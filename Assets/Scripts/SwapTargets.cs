@@ -6,6 +6,12 @@ using UnityEngine.U2D;
 public class SwapTargets : MonoBehaviour, ISwappable
 {
     [SerializeField] private SpriteShapeRenderer spriteShapeRenderer;
+
+    private Rigidbody2D rb2d;
+    private void Awake()
+    {
+        rb2d = GetComponent<Rigidbody2D>();
+    }
     public void Swap(Vector3 position)
     {
        Debug.Log("test");
@@ -16,7 +22,7 @@ public class SwapTargets : MonoBehaviour, ISwappable
        }
     }
 
-    public void LockItIn()
+    public void LockTarget()
     {
         if (spriteShapeRenderer != null)
         {
@@ -24,8 +30,13 @@ public class SwapTargets : MonoBehaviour, ISwappable
         }
     }
 
-    private void Awake()
+    public void FreezePosition()
     {
-        
+        rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
+    }
+
+    public void UnFreezePosition()
+    {
+        rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 }

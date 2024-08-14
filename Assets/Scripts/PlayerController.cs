@@ -10,6 +10,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private int goldAmount = 0;
     private Rigidbody2D rb2D;
     private SpriteRenderer spriteRenderer;
 
@@ -48,6 +49,7 @@ public class PlayerController : MonoBehaviour
             lashingAbility_SO.onAbilityPressed += FlipCharacter;
             lashingAbility_SO.onAbilityReleased += FlipCharacter;
         }
+        GameEventsManager.instance.onGoldGained += CollectGold;
     }
 
     private void OnDisable()
@@ -57,8 +59,13 @@ public class PlayerController : MonoBehaviour
             lashingAbility_SO.onAbilityPressed -= FlipCharacter;
             lashingAbility_SO.onAbilityReleased -= FlipCharacter;
         }
+        GameEventsManager.instance.onGoldGained -= CollectGold;
     }
 
+    public void CollectGold(int value)
+    {
+        goldAmount += value;
+    }
     private void Awake()
     {
         rb2D = GetComponent<Rigidbody2D>();
@@ -188,5 +195,11 @@ public class PlayerController : MonoBehaviour
 
         transform.rotation = endRotation;
         //rb2D.freezeRotation = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Gold gold = collision.gameObject.GetComponent<Gold>();
+        if (gold != null) { GameEventsManager.instance.GoldGained(gold.amount); }
     }
 }

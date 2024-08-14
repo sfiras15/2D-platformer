@@ -33,6 +33,6 @@ public class LashingAbility_SO : ScriptableObject
         {
             onAbilityReleased.Invoke();
         }
-        Debug.Log("EventFired : " + Time.time);
+        //Debug.Log("EventFired : " + Time.time);
     }
 }

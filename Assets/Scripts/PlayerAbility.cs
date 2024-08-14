@@ -84,7 +84,7 @@ public class PlayerAbility : MonoBehaviour
                         {
                             // Show the UI for the closest interactable
                             //iSwappable.ShowUI();
-                            iSwappable.LockItIn();
+                            iSwappable.LockTarget();
                             swapAbility_SO.swapTarget = target.gameObject;
                         }
                     }
