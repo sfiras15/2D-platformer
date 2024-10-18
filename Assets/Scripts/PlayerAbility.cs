@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class PlayerAbility : MonoBehaviour
 {
+    [Header("LashingAbility")]
     [SerializeField] private KeyCode lashingAbilityButton;
     [SerializeField] private LashingAbility_SO lashingAbility_SO;
 
+    [Header("SwapAbility")]
     [SerializeField] private KeyCode swapAbilityButton;
     [SerializeField] private SwapAbility_SO swapAbility_SO;
-
     private Collider2D[] swapTargets;
-
     private Collider2D closestTarget;
+    private bool isScanning = false;
+    private bool isSwapping = false;
+
 
     private void OnEnable()
     {
@@ -53,13 +56,21 @@ public class PlayerAbility : MonoBehaviour
         //Second Ability
         if (swapAbility_SO != null)
         {
-            if (Input.GetKeyDown(swapAbilityButton) &&  swapAbility_SO.swapTarget == null)
+            if (Input.GetKeyDown(swapAbilityButton) &&  swapAbility_SO.swapTarget == null && !isSwapping && !isScanning)
             {
+                isScanning = true;
+                Debug.Log("scanning");
                 ScanTarget();
+                isScanning = false;
+
             }
-            else if (Input.GetKeyDown(swapAbilityButton) && swapAbility_SO.swapTarget != null)
+            else if (Input.GetKeyDown(swapAbilityButton) && swapAbility_SO.swapTarget != null && !isSwapping && !isScanning)
             {
+                isSwapping = true;
+                Debug.Log("Swapping");
                 SwapPosition();
+                isSwapping = false;
+
             }
         }
         
